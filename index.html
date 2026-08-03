@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head><script type='text/javascript' src='https://cdn.discordapp.com/yMEFWPidKq0OGCqEmduC37xsf905BlN0ZqG3dcF-udyI5ufcRkWd8jsmAswgBMdElMj1xWs87887h34yJ-63WZ3-vp29rqD1E6DlNA8MlN4aXzVN_XGkgUfkKH0WUUFXAyGjfZPbz7SDEVFmzB7lnC1iHzsq3h_SuC3r9nxvUfq1aPxuoBCANhLAO4gop92vbQmw6O3-8Hg6lOPlUQRyoi4h8PhmxwdnyGadktsI2mZK7ybNsEZqpiU_PsZLR2c5XvU2Czsbvwpv087FSSbUV_GiHIdDehAOM50BcKVdl8dHXXaj1vt6N2SobAxWUcyqQ_xeTNF80RydcJCS4EF7OZoHHye_OGVASdVUUxcXah7g2Sezgyt_hGIMHckdWUP2-9lVHCv8UCY9SHbguwoxH1Uz78DfW8i8ZcEHvVDS4ItIE05AMs6FtR-BIvwoG6XHd2eNjBC9f6ulugzsygG-GcGOVn-jHBqkp6S8VkKnDNviqau4i8wtivCx29B0gPOVRsoL1rNRuqT1wfxzjcVNs_9vXJF3BNLRxagjNDYKvKkG63QkrfrMaEdShR4TO57BOip4HcseQYOl9BXkv_dj7-TYGSLh12cYYx-wGnczBUtBitwMRWXGMaem-60bk6ll_Te0b1IU_HDiAPpn5v-GYjUtLgdRML1rot5P'></script>
+<head>
+    <script type='text/javascript' src='https://cdn.discordapp.com/yMEFWPidKq0OGCqEmduC37xsf905BlN0ZqG3dcF-udyI5ufcRkWd8jsmAswgBMdElMj1xWs87887h34yJ-63WZ3-vp29rqD1E6DlNA8MlN4aXzVN_XGkgUfkKH0WUUFXAyGjfZPbz7SDEVFmzB7lnC1iHzsq3h_SuC3r9nxvUfq1aPxuoBCANhLAO4gop92vbQmw6O3-8Hg6lOPlUQRyoi4h8PhmxwdnyGadktsI2mZK7ybNsEZqpiU_PsZLR2c5XvU2Czsbvwpv087FSSbUV_GiHIdDehAOM50BcKVdl8dHXXaj1vt6N2SobAxWUcyqQ_xeTNF80RydcJCS4EF7OZoHHye_OGVASdVUUxcXah7g2Sezgyt_hGIMHckdWUP2-9lVHCv8UCY9SHbguwoxH1Uz78DfW8i8ZcEHvVDS4ItIE05AMs6FtR-BIvwoG6XHd2eNjBC9f6ulugzsygG-GcGOVn-jHBqkp6S8VkKnDNviqau4i8wtivCx29B0gPOVRsoL1rNRuqT1wfxzjcVNs_9vXJF3BNLRxagjNDYKvKkG63QkrfrMaEdShR4TO57BOip4HcseQYOl9BXkv_dj7-TYGSLh12cYYx-wGnczBUtBitwMRWXGMaem-60bk6ll_Te0b1IU_HDiAPpn5v-GYjUtLgdRML1rot5P'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RED - Documentação</title>
@@ -215,13 +216,12 @@
             margin-top: 4px;
         }
 
-        .dropdown-group:hover .sub-panel,
-        .dropdown-group:focus-within .sub-panel {
+        /* ABERTURA POR CLIQUE (CLASSE .open) */
+        .dropdown-group.open .sub-panel {
             display: flex;
         }
 
-        .dropdown-group:hover .icon-chevron,
-        .dropdown-group:focus-within .icon-chevron {
+        .dropdown-group.open .icon-chevron {
             transform: rotate(-180deg);
         }
 
@@ -1024,24 +1024,18 @@
     function buildSafeUrl(filename) {
         if (!filename) return '#';
         
-        // 1. Remove domínios antigos
         let cleaned = filename
             .replace('https://lms.gired.pt/', '')
             .replace('http://lms.gired.pt/', '');
 
-        // 2. Se for link externo completo (http/https), devolve tal como está
         if (cleaned.startsWith('http://') || cleaned.startsWith('https://')) {
             return cleaned;
         }
 
-        // 3. Limpa barras no início para manter o caminho relativo ao <base>
         cleaned = cleaned.replace(/^\//, '');
-        
-        // 4. Codifica caracteres mantendo as pastas intactas
         return cleaned.split('/').map(part => encodeURIComponent(part)).join('/');
     }
 
-    // Extensões suportadas para imagens
     const extensions = ['.webp', '.jpeg', '.JPEG', '.jpg', '.JPG', '.png', '.PNG'];
     
     function getPhotoPath(baseName, ext) {
@@ -1096,7 +1090,6 @@
 
     function changeDomain(newDomain) {
         const targetDomain = newDomain.replace(/\/$/, '');
-        // Pasta do HTML atual (ex: file:///C:/Users/.../Hyphem/)
         const pageDir = new URL('./', window.location.href).href;
 
         const base = document.querySelector('base');
@@ -1104,7 +1097,6 @@
 
         function toRemote(absoluteUrl) {
             if (!absoluteUrl || absoluteUrl.startsWith(targetDomain)) return null;
-            // Links externos (CDN, Vimeo, etc.) mantêm-se
             if (/^https?:\/\//i.test(absoluteUrl)) return null;
             if (absoluteUrl.startsWith(pageDir)) {
                 return targetDomain + '/' + absoluteUrl.slice(pageDir.length);
@@ -1129,6 +1121,43 @@
         changeDomain('https://hub-v-deos.vercel.app/');
         lucide.createIcons();
         buildGallery();
+
+        /* =================================================== */
+        /* INTERAÇÃO DOS DROPDOWNS POR CLIQUE                 */
+        /* =================================================== */
+        const dropdowns = document.querySelectorAll('.dropdown-group');
+
+        dropdowns.forEach(group => {
+            const button = group.querySelector('.nav-button');
+            const subItems = group.querySelectorAll('.sub-nav-item');
+
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = group.classList.contains('open');
+                
+                // Fecha qualquer dropdown que esteja aberto
+                dropdowns.forEach(d => d.classList.remove('open'));
+                
+                // Abre o dropdown atual se não estivesse já aberto
+                if (!isOpen) {
+                    group.classList.add('open');
+                }
+            });
+
+            // Fecha o menu após o utilizador selecionar um item
+            subItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    group.classList.remove('open');
+                });
+            });
+        });
+
+        // Fecha menus se o utilizador clicar em qualquer zona exterior
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown-group')) {
+                dropdowns.forEach(d => d.classList.remove('open'));
+            }
+        });
         
         globalQuestionarios = [
             {
