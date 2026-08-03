@@ -779,7 +779,7 @@
                     <h2 class="content-heading-1">Protocolo de Pilotagem</h2>
                     <p class="content-text" style="margin-bottom: 20px;">Consulte ou transfira o documento oficial do Protocolo de Pilotagem no botão abaixo:</p>
                     <div>
-                        <a href="https://lms.gired.pt/red-protocolo-de-pilotagem-vfinal.pdf" target="_blank" class="btn-aceder-pill">
+                        <a href="red-protocolo-de-pilotagem-vfinal.pdf" target="_blank" class="btn-aceder-pill">
                             <i class="fa-solid fa-file-pdf" style="margin-right: 8px;"></i> Aceder ao Protocolo (PDF)
                         </a>
                     </div>
@@ -1005,8 +1005,8 @@
 </div> 
 
 <script>
-    // CAMINHO BASE APONTANDO PARA A VERCEL
-   const BASE_PATH = './';
+    // CAMINHO BASE RELATIVO PARA A VERCEL / GIRED.PT
+    const BASE_PATH = './';
 
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRREjylh0mcjvTRSyr7dxfyMvjO23J2wV-SyWpDe2sswSdPz40rWronIxJXUqqohllk1U_jojRsqadA/pub?output=csv";
     const LINKS_RED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9rk-7uX34gLLAADpYPbhpDifHYhs3Mdim2W7WXia9YJ_KeU3JCu8_bs8dhPNC6ILBTj7GArGFqjCu/pub?output=csv";
@@ -1015,16 +1015,21 @@
     function buildSafeUrl(filename) {
         if (!filename) return '#';
         
-        // Se já for um link externo completo (ex: Google Drive / Sheets)
-        if (filename.startsWith('http://') || filename.startsWith('https://')) {
-            return filename;
+        // 1. Remove o domínio antigo lms.gired.pt caso ele venha na string
+        let cleaned = filename
+            .replace('https://lms.gired.pt/', '')
+            .replace('http://lms.gired.pt/', '');
+
+        // 2. Se for um link externo real (ex: Google Drive, Youtube), mantém
+        if (cleaned.startsWith('http://') || cleaned.startsWith('https://')) {
+            return cleaned;
         }
 
-        // Remove barras no início para evitar caminhos absolutos errados
-        const cleanName = filename.replace(/^\//, '');
+        // 3. Limpa barras no início
+        cleaned = cleaned.replace(/^\//, '');
         
-        // Codifica acentos, espaços e parênteses mantendo as barras de pastas
-        const encodedName = cleanName.split('/').map(part => encodeURIComponent(part)).join('/');
+        // 4. Codifica caracteres especiais mantendo a estrutura de pastas
+        const encodedName = cleaned.split('/').map(part => encodeURIComponent(part)).join('/');
         
         return `${BASE_PATH}${encodedName}`;
     }
@@ -1403,8 +1408,9 @@
             headers.forEach(header => {
                 const val = (row[header] || '-').trim();
 
-                if (typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'))) {
-                    html += `<td><a href="${val}" target="_blank" class="btn-aceder-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder</a></td>`;
+                if (val !== '-' && (val.startsWith('http') || val.includes('.pdf') || val.includes('.xlsx') || val.includes('.docx'))) {
+                    const safeUrl = buildSafeUrl(val);
+                    html += `<td><a href="${safeUrl}" target="_blank" class="btn-aceder-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder</a></td>`;
                 } else {
                     html += `<td>${val}</td>`;
                 }
@@ -1452,8 +1458,9 @@
             headers.forEach(header => {
                 const val = (row[header] || '-').trim();
 
-                if (typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'))) {
-                    html += `<td><a href="${val}" target="_blank" class="btn-aceder-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder</a></td>`;
+                if (val !== '-' && (val.startsWith('http') || val.includes('.pdf') || val.includes('.xlsx') || val.includes('.docx'))) {
+                    const safeUrl = buildSafeUrl(val);
+                    html += `<td><a href="${safeUrl}" target="_blank" class="btn-aceder-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder</a></td>`;
                 } else {
                     html += `<td>${val}</td>`;
                 }
