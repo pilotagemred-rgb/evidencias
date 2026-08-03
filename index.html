@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RED - Documentação</title>
 
+    <!-- RESOLUÇÃO AUTOMÁTICA DE ROTAS E SUBPASTAS (Vercel e gired.pt/project-docs) -->
+    <script>
+      (function() {
+        let path = window.location.pathname;
+        if (!path.endsWith('/') && !path.split('/').pop().includes('.')) {
+          path += '/';
+        }
+        const base = document.createElement('base');
+        base.href = window.location.origin + path;
+        document.head.appendChild(base);
+      })();
+    </script>
+
     <!-- Papa Parse CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -1005,33 +1018,28 @@
 </div> 
 
 <script>
-    // CAMINHO BASE RELATIVO PARA A VERCEL / GIRED.PT
-    const BASE_PATH = './';
-
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRREjylh0mcjvTRSyr7dxfyMvjO23J2wV-SyWpDe2sswSdPz40rWronIxJXUqqohllk1U_jojRsqadA/pub?output=csv";
     const LINKS_RED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9rk-7uX34gLLAADpYPbhpDifHYhs3Mdim2W7WXia9YJ_KeU3JCu8_bs8dhPNC6ILBTj7GArGFqjCu/pub?output=csv";
 
-    // Função para codificar nomes com espaços e caracteres especiais mantendo o caminho relativo
+    // Função para tratar links respeitando a tag <base> injetada no head
     function buildSafeUrl(filename) {
         if (!filename) return '#';
         
-        // 1. Remove o domínio antigo lms.gired.pt caso ele venha na string
+        // 1. Remove domínios antigos
         let cleaned = filename
             .replace('https://lms.gired.pt/', '')
             .replace('http://lms.gired.pt/', '');
 
-        // 2. Se for um link externo real (ex: Google Drive, Youtube), mantém
+        // 2. Se for link externo completo (http/https), devolve tal como está
         if (cleaned.startsWith('http://') || cleaned.startsWith('https://')) {
             return cleaned;
         }
 
-        // 3. Limpa barras no início
+        // 3. Limpa barras no início para manter o caminho relativo ao <base>
         cleaned = cleaned.replace(/^\//, '');
         
-        // 4. Codifica caracteres especiais mantendo a estrutura de pastas
-        const encodedName = cleaned.split('/').map(part => encodeURIComponent(part)).join('/');
-        
-        return `${BASE_PATH}${encodedName}`;
+        // 4. Codifica caracteres mantendo as pastas intactas
+        return cleaned.split('/').map(part => encodeURIComponent(part)).join('/');
     }
 
     // Extensões suportadas para imagens
