@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <script>
-      // Força a adição da barra "/" no final do URL caso falte (ex: /project-docs -> /project-docs/)
-      if (!window.location.pathname.endsWith('/') && !window.location.pathname.split('/').pop().includes('.')) {
-        window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
-      }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RED - Documentação</title>
+
+    <!-- RESOLUÇÃO AUTOMÁTICA DE ROTAS E SUBPASTAS (Vercel e gired.pt/project-docs) -->
+    <script>
+      (function() {
+        let path = window.location.pathname;
+        if (!path.endsWith('/') && !path.split('/').pop().includes('.')) {
+          path += '/';
+        }
+        const base = document.createElement('base');
+        base.href = window.location.origin + path;
+        document.head.appendChild(base);
+      })();
+    </script>
 
     <!-- Papa Parse CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -1014,7 +1021,7 @@
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRREjylh0mcjvTRSyr7dxfyMvjO23J2wV-SyWpDe2sswSdPz40rWronIxJXUqqohllk1U_jojRsqadA/pub?output=csv";
     const LINKS_RED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9rk-7uX34gLLAADpYPbhpDifHYhs3Mdim2W7WXia9YJ_KeU3JCu8_bs8dhPNC6ILBTj7GArGFqjCu/pub?output=csv";
 
-    // Função para tratar links de ficheiros mantendo o caminho relativo
+    // Função para tratar links respeitando a tag <base> injetada no head
     function buildSafeUrl(filename) {
         if (!filename) return '#';
         
@@ -1028,7 +1035,7 @@
             return cleaned;
         }
 
-        // 3. Limpa barras no início
+        // 3. Limpa barras no início para manter o caminho relativo ao <base>
         cleaned = cleaned.replace(/^\//, '');
         
         // 4. Codifica caracteres mantendo as pastas intactas
