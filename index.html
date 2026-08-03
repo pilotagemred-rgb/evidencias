@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RED - Documentação</title>
+
+    <!-- Papa Parse CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =================================================== */
+        /* GLOBAL LAYOUT ARCHITECTURE                          */
+        /* =================================================== */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .main {
+            font-family: "IBM Plex Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+        } 
+
+        /* =================================================== */
+        /* HEADER COMPONENTS                                   */
+        /* =================================================== */
+        .eduqa-header {
+            background-color: #ffffff;
+            width: 100%;
+            padding: 20px 0;
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 20px;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .logo-img {
+            height: 64px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .header-shape {
+            position: absolute;
+            border-radius: 9999px;
+            pointer-events: none;
+        }
+        .h-shape-1 { width: 70px; height: 16px; background-color: #A3F3F3; left: 10px; top: 50%; transform: translateY(-50%); }
+        .h-shape-2 { width: 45px; height: 14px; background-color: #FEF3C7; left: 90px; bottom: -10px; }
+        .h-shape-3 { width: 55px; height: 16px; background-color: #DDD6FE; right: 10px; top: 15px; }
+        .h-shape-4 { width: 50px; height: 16px; background-color: #FED7AA; right: 80px; bottom: -5px; }
+
+        /* =================================================== */
+        /* PAGE HEADER & DESCRIPTION                           */
+        /* =================================================== */
+        .page-header-container {
+            max-width: 1200px;
+            margin: 30px auto 10px auto;
+            padding: 0 20px;
+            text-align: center;
+            box-sizing: border-box;
+            width: 100%;
+            z-index: 10;
+            position: relative;
+        }
+        .page-title { 
+            font-family: "IBM Plex Sans", sans-serif;
+            color: #1d4ed8;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .page-description {
+            color: #334155;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 950px;
+            margin: 0 auto 20px auto;
+            text-align: justify;
+        }
+
+        .intro-illustration-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            max-width: 650px;
+            width: 100%;
+        }
+        .intro-illustration-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* =================================================== */
+        /* NAVIGATION & DROPDOWNS                              */
+        /* =================================================== */
+        .hub-wrapper {
+            background-color: #ffffff;
+            font-family: "IBM Plex Sans", sans-serif;
+            padding: 10px 20px 60px 20px;
+            box-sizing: border-box;
+            width: 100%;
+            flex-grow: 1;
+            z-index: 10;
+            position: relative;
+        }
+
+        .hub-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .horizontal-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            width: 100%;
+            justify-content: center;
+            position: relative;
+            z-index: 50;
+        }
+
+        .dropdown-group {
+            position: relative;
+            flex: 1 1 200px;
+            max-width: 280px;
+        }
+        
+        .nav-button {
+            background: #f0f9ff;
+            color: #1e40af;
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            user-select: none;
+            width: 100%;
+            box-sizing: border-box;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+        .nav-button:hover { background: #e0f2fe; }
+        .nav-text { font-weight: 600; font-size: 15px; }
+
+        .sub-panel {
+            display: none;
+            flex-direction: column;
+            background: #ffffff;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            padding: 8px;
+            gap: 4px;
+            z-index: 100;
+            margin-top: 4px;
+        }
+
+        .dropdown-group:hover .sub-panel,
+        .dropdown-group:focus-within .sub-panel {
+            display: flex;
+        }
+
+        .dropdown-group:hover .icon-chevron,
+        .dropdown-group:focus-within .icon-chevron {
+            transform: rotate(-180deg);
+        }
+
+        .sub-nav-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #334155;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .sub-nav-item:hover { 
+            background: #e0f2fe !important; 
+            color: #1e40af !important;
+        }
+
+        .icon-chevron { width: 18px; height: 18px; color: #1e40af; transition: transform 0.2s; }
+        .icon-sub { width: 18px; height: 18px; color: #64748b; }
+
+        .main-content-display {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            min-height: 380px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .content-view { display: none; flex-direction: column; }
+        
+        .content-heading-1 {
+            font-weight: 700;
+            color: #000000;
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 24px;
+        }
+        .content-text {
+            color: #1e293b;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 0px;
+        }
+
+        /* GALERIA DE FOTOS PILOTAGEM */
+        .photo-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+        .photo-card {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .photo-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .photo-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* FILTROS DA TABELA */
+        .table-filters-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            background-color: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1 1 180px;
+        }
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1e40af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .filter-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background-color: #ffffff;
+            color: #334155;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .filter-select:focus {
+            border-color: #3b82f6;
+        }
+
+        /* TABELAS */
+        .table-responsive-container {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            margin-top: 10px;
+        }
+        .dynamic-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .dynamic-table th {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-weight: 700;
+            padding: 12px 16px;       
+            border-bottom: 2px solid #cbd5e1;
+            border-right: 1px solid #e2e8f0; 
+            text-transform: uppercase;
+            font-size: 11px;          
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+        .dynamic-table td {
+            padding: 14px 16px;       
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #f1f5f9; 
+            color: #334155;
+            vertical-align: middle;
+            font-size: 13px;          
+        }
+        .dynamic-table tbody tr:hover { background-color: #f1f5f9; }
+
+        .btn-aceder-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #dbeafe;
+            color: #1d4ed8 !important;
+            padding: 10px 28px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+        .btn-aceder-pill:hover {
+            background-color: #bfdbfe;
+            color: #1e40af !important;
+        }
+
+        .btn-aceder-sm {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #1d4ed8;
+            color: #ffffff !important;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .btn-aceder-sm:hover { background-color: #1e40af; }
+
+        .btn-aceder-green {
+            background-color: #059669;
+        }
+        .btn-aceder-green:hover {
+            background-color: #047857;
+        }
+
+        .table-loader {
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        /* Imagens Inferiores */
+        .illustrations-section {
+            width: 100%;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            display: none;
+            justify-content: center;
+            z-index: 10;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .illustrations-section .illustration-container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .illustrations-section img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* CSS PAINEL ACTIVATION LOGIC */
+        #view-default:checked ~ .page-header-container .intro-illustration-box { display: flex !important; }
+        #view-default:checked ~ .hub-wrapper .hub-container .main-content-display #panel-default-welcome { display: flex !important; }
+        #view-default:checked ~ .illustrations-section { display: none !important; }
+
+        body:has(input[name="active-view"]:not(#view-default):checked) .intro-illustration-box { display: none !important; }
+        body:has(input[name="active-view"]:not(#view-default):checked) .illustrations-section { display: flex !important; }
+
+        #view-sobre-oq:checked ~ .hub-wrapper .hub-container .main-content-display #panel-sobre-oq,
+        #view-sobre-sas:checked ~ .hub-wrapper .hub-container .main-content-display #panel-sobre-sas,
+        #view-pilotagem-protocolo:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-protocolo,
+        #view-pilotagem-tabela:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-tabela,
+        #view-pilotagem-links:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-links,
+        #view-pilotagem-sessoes:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-sessoes,
+        #view-pilotagem-videos:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-videos,
+        #view-pilotagem-questionarios:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-questionarios,
+        #view-pilotagem-uminho:checked ~ .hub-wrapper .hub-container .main-content-display #panel-pilotagem-uminho,
+        #view-gired-oq:checked ~ .hub-wrapper .hub-container .main-content-display #panel-gired-oq,
+        #view-gired-ia:checked ~ .hub-wrapper .hub-container .main-content-display #panel-gired-ia,
+        #view-gired-construir:checked ~ .hub-wrapper .hub-container .main-content-display #panel-gired-construir,
+        #view-gired-ideia:checked ~ .hub-wrapper .hub-container .main-content-display #panel-gired-ideia { 
+            display: flex !important; 
+        }
+
+        #view-sobre-oq:checked ~ .hub-wrapper .horizontal-menu .sub-btn-sobre-oq,
+        #view-sobre-sas:checked ~ .hub-wrapper .horizontal-menu .sub-btn-sobre-sas,
+        #view-pilotagem-protocolo:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-protocolo,
+        #view-pilotagem-tabela:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-tabela,
+        #view-pilotagem-links:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-links,
+        #view-pilotagem-sessoes:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-sessoes,
+        #view-pilotagem-videos:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-videos,
+        #view-pilotagem-questionarios:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-questionarios,
+        #view-pilotagem-uminho:checked ~ .hub-wrapper .horizontal-menu .sub-btn-pilotagem-uminho,
+        #view-gired-oq:checked ~ .hub-wrapper .horizontal-menu .sub-btn-gired-oq,
+        #view-gired-ia:checked ~ .hub-wrapper .horizontal-menu .sub-btn-gired-ia,
+        #view-gired-construir:checked ~ .hub-wrapper .horizontal-menu .sub-btn-gired-construir,
+        #view-gired-ideia:checked ~ .hub-wrapper .horizontal-menu .sub-btn-gired-ideia {
+            background: #dbeafe !important; 
+            color: #1e40af !important; 
+            border-color: #93c5fd;
+            font-weight: 700;
+        }
+
+        #view-sobre-oq:checked ~ .hub-wrapper .horizontal-menu .trigger-sobre,
+        #view-sobre-sas:checked ~ .hub-wrapper .horizontal-menu .trigger-sobre,
+        #view-pilotagem-protocolo:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-pilotagem-tabela:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-pilotagem-links:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-pilotagem-sessoes:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-pilotagem-videos:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-pilotagem-questionarios:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-pilotagem-uminho:checked ~ .hub-wrapper .horizontal-menu .trigger-pilotagem,
+        #view-gired-oq:checked ~ .hub-wrapper .horizontal-menu .trigger-gired,
+        #view-gired-ia:checked ~ .hub-wrapper .horizontal-menu .trigger-gired,
+        #view-gired-construir:checked ~ .hub-wrapper .horizontal-menu .trigger-gired,
+        #view-gired-ideia:checked ~ .hub-wrapper .horizontal-menu .trigger-gired {
+             background: #dbeafe !important; color: #1e40af !important; border-color: #3b82f6; 
+        }
+
+        /* FOOTER */
+        .eduqa-layout-footer {
+            background-color: #021C51 !important;
+            padding: 60px 20px 40px 20px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: auto;
+            z-index: 10;
+            position: relative;
+        }
+        .footer-inner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+        .footer-logos-row {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .footer-logos-row { flex-direction: row; }
+        }
+        .footer-partner-logos-group {
+            display: flex;
+            gap: 40px;
+            justify-content: flex-end;
+            flex-direction: column;
+        }
+        @media (max-width: 767px) {
+            .footer-partner-logos-group {
+                flex-direction: column;
+                gap: 32px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        .footer-main-logo { display: flex; align-items: center; transition: opacity 0.2s; }
+        .logo-red { height: 58px; width: auto; display: block; }
+
+        .footer-content-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+        }
+        @media (min-width: 768px) {
+            .footer-content-row { grid-template-columns: 240px 1fr; gap: 0; }
+        }
+
+        .footer-info-block { display: flex; flex-direction: row; }
+
+        .footer-funding-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .funding-statement {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            margin: 0;
+            text-align: left;
+        }
+        .funding-inline-logos {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .funding-logo {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* GRID VÍDEOS */
+        .videos-grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .videos-grid-container {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        .video-card-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+        }
+
+        .video-card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1e40af;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vimeo-wrapper {
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+
+    <!-- Radios dos Estados (Router) -->
+    <input type="radio" id="view-default" name="active-view" checked style="display: none;">
+
+    <input type="radio" id="view-sobre-oq" name="active-view" style="display: none;">
+    <input type="radio" id="view-sobre-sas" name="active-view" style="display: none;">
+
+    <input type="radio" id="view-pilotagem-protocolo" name="active-view" style="display: none;">
+    <input type="radio" id="view-pilotagem-tabela" name="active-view" style="display: none;">
+    <input type="radio" id="view-pilotagem-links" name="active-view" style="display: none;">
+    <input type="radio" id="view-pilotagem-sessoes" name="active-view" style="display: none;">
+    <input type="radio" id="view-pilotagem-videos" name="active-view" style="display: none;">
+    <input type="radio" id="view-pilotagem-questionarios" name="active-view" style="display: none;">
+    <input type="radio" id="view-pilotagem-uminho" name="active-view" style="display: none;">
+
+    <input type="radio" id="view-gired-oq" name="active-view" style="display: none;">
+    <input type="radio" id="view-gired-ia" name="active-view" style="display: none;">
+    <input type="radio" id="view-gired-construir" name="active-view" style="display: none;">
+    <input type="radio" id="view-gired-ideia" name="active-view" style="display: none;">
+
+    <header class="eduqa-header">
+        <div class="header-inner">
+            <div class="header-shape h-shape-1"></div>
+            <div class="header-shape h-shape-2"></div>
+            
+            <a href="./" class="header-logo">
+                <img src="https://i.imgur.com/Dc0uBa8.png" alt="RED logo" class="logo-img">
+            </a>
+
+            <div class="header-shape h-shape-3"></div>
+            <div class="header-shape h-shape-4"></div>
+        </div>
+    </header>
+
+    <div class="page-header-container">
+        <h1 class="page-title">
+            RED - Documentação
+        </h1>
+        <p class="page-description">
+            Esta página web recolhe os vários documentos e evidências referentes à documentação e Entregáveis produzidos no projeto CLPQ 01/2025/DGE - Aquisição de serviços para o desenvolvimento de Recursos Educativos Digitais para o Ensino Básico nas áreas de Português, Matemática e Ciências.
+        </p>
+
+        <div class="intro-illustration-box">
+            <a href="https://i.imgur.com/harHv4o.png" target="_blank" rel="noopener noreferrer">
+                <img src="https://i.imgur.com/harHv4o.png" alt="Ilustração RED">
+            </a>
+        </div>
+    </div>
+
+    <div class="hub-wrapper">
+        <div class="hub-container">
+            
+            <!-- Horizontal Row Navigation Menu -->
+            <div class="horizontal-menu">
+
+                <!-- Grupo Dropdown: Sobre o EA -->
+                <div class="dropdown-group">
+                    <div class="nav-button trigger-sobre">
+                        <span class="nav-text">Sobre o EA</span>
+                        <i data-lucide="chevron-down" class="icon-chevron"></i>
+                    </div>
+                    <div class="sub-panel">
+                        <label for="view-sobre-oq" class="sub-nav-item sub-btn-sobre-oq">
+                            <i data-lucide="help-circle" class="icon-sub"></i> O que é?
+                        </label>
+                        <label for="view-sobre-sas" class="sub-nav-item sub-btn-sobre-sas">
+                            <i data-lucide="layers" class="icon-sub"></i> SAs e Atividades
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Grupo Dropdown: Entrega 31 Julho -->
+                <div class="dropdown-group">
+                    <div class="nav-button trigger-pilotagem">
+                        <span class="nav-text">Entrega 31 Julho</span>
+                        <i data-lucide="chevron-down" class="icon-chevron"></i>
+                    </div>
+                    <div class="sub-panel">
+                        <label for="view-pilotagem-protocolo" class="sub-nav-item sub-btn-pilotagem-protocolo">
+                            <i data-lucide="file-text" class="icon-sub"></i> Protocolo de Pilotagem
+                        </label>
+                        <label for="view-pilotagem-tabela" class="sub-nav-item sub-btn-pilotagem-tabela">
+                            <i data-lucide="file-spreadsheet" class="icon-sub"></i> Tabela Pilotagem
+                        </label>
+                        <label for="view-pilotagem-links" class="sub-nav-item sub-btn-pilotagem-links">
+                            <i data-lucide="link" class="icon-sub"></i> Links RED
+                        </label>
+                        <label for="view-pilotagem-sessoes" class="sub-nav-item sub-btn-pilotagem-sessoes">
+                            <i data-lucide="users" class="icon-sub"></i> Sessões de Pilotagem
+                        </label>
+                        <label for="view-pilotagem-videos" class="sub-nav-item sub-btn-pilotagem-videos">
+                            <i data-lucide="file-play" class="icon-sub"></i> Vídeos introdutórios
+                        </label>
+                        <label for="view-pilotagem-questionarios" class="sub-nav-item sub-btn-pilotagem-questionarios">
+                            <i data-lucide="file-check" class="icon-sub"></i> Questionários
+                        </label>
+                        <label for="view-pilotagem-uminho" class="sub-nav-item sub-btn-pilotagem-uminho">
+                            <i data-lucide="award" class="icon-sub"></i> Aprovações U.Minho
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Grupo Dropdown: GiRED -->
+                <div class="dropdown-group">
+                    <div class="nav-button trigger-gired">
+                        <span class="nav-text">GiRED</span>
+                        <i data-lucide="chevron-down" class="icon-chevron"></i>
+                    </div>
+                    <div class="sub-panel">
+                        <label for="view-gired-oq" class="sub-nav-item sub-btn-gired-oq">
+                            <i data-lucide="file-text" class="icon-sub"></i> O que é o GiRED?
+                        </label>
+                        <label for="view-gired-ia" class="sub-nav-item sub-btn-gired-ia">
+                            <i data-lucide="file-text" class="icon-sub"></i> Criar um RED com IA
+                        </label>
+                        <label for="view-gired-construir" class="sub-nav-item sub-btn-gired-construir">
+                            <i data-lucide="file-text" class="icon-sub"></i> Construir conteúdo
+                        </label>
+                        <label for="view-gired-ideia" class="sub-nav-item sub-btn-gired-ideia">
+                            <i data-lucide="file-text" class="icon-sub"></i> Da ideia ao RED final
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Main Content Display -->
+            <div class="main-content-display">
+                
+                <div class="content-view" id="panel-default-welcome">
+                    <h2 class="content-heading-1">Bem-vindo à plataforma GiRED</h2>
+                    <p class="content-text">Selecione uma opção nos menus superiores para consultar as informações sobre a Pilotagem, o GiRED e os conteúdos EA.</p>
+                </div>
+
+                <!-- O QUE É? -->
+                <div class="content-view" id="panel-sobre-oq">
+                    <h2 class="content-heading-1">O que é?</h2>
+                    <p class="content-text">Informações sobre o ecossistema EA e os seus principais objetivos pedagógicos.</p>
+                    <div style="padding:56.25% 0 0 0;position:relative; margin-top:20px;"><iframe src="https://player.vimeo.com/video/1214505800?h=89a337f1e1&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Video 1_Guia de utilização EA"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+                </div>
+
+                <!-- SAS E ATIVIDADES -->
+                <div class="content-view" id="panel-sobre-sas">
+                    <h2 class="content-heading-1">SAs e Atividades</h2>
+                    <p class="content-text">Detalhamento da estrutura das Sequências de Aprendizagem (SA) e tipos de atividades disponíveis.</p>
+                    <div style="padding:56.25% 0 0 0;position:relative; margin-top:20px;"><iframe src="https://player.vimeo.com/video/1214505914?h=e786957d6b&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Video 2_Guia de utilização SAs"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+                </div>
+
+                <!-- PROTOCOLO DE PILOTAGEM -->
+                <div class="content-view" id="panel-pilotagem-protocolo">
+                    <h2 class="content-heading-1">Protocolo de Pilotagem</h2>
+                    <p class="content-text" style="margin-bottom: 20px;">Consulte ou transfira o documento oficial do Protocolo de Pilotagem no botão abaixo:</p>
+                    <div>
+                        <a href="./red-protocolo-de-pilotagem-vfinal.pdf" target="_blank" class="btn-aceder-pill">
+                            <i class="fa-solid fa-file-pdf" style="margin-right: 8px;"></i> Aceder ao Protocolo (PDF)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TABELA PILOTAGEM -->
+                <div class="content-view" id="panel-pilotagem-tabela">
+                    <h2 class="content-heading-1">Tabela da Pilotagem</h2>
+                    <p class="content-text">Consulte a tabela com informação sobre as sessões de pilotagem já realizadas.</p>
+                    
+                    <div class="table-filters-wrapper">
+                        <div class="filter-group">
+                            <label for="filter-data">Data</label>
+                            <select id="filter-data" class="filter-select">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-ae">AE</label>
+                            <select id="filter-ae" class="filter-select">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-ano">Ano de Escolaridade</label>
+                            <select id="filter-ano" class="filter-select">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-realizou">Realizou-se</label>
+                            <select id="filter-realizou" class="filter-select">
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-container">
+                        <div id="pilotagem-table-container">
+                            <div class="table-loader">A carregar dados da pilotagem...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LINKS RED -->
+                <div class="content-view" id="panel-pilotagem-links">
+                    <h2 class="content-heading-1">Links RED</h2>
+                    <p class="content-text">Consulte e filtre a lista de Recursos Educativos Digitais abaixo.</p>
+
+                    <div class="table-filters-wrapper">
+                        <div class="filter-group">
+                            <label for="filter-links-red">Filtro por RED</label>
+                            <select id="filter-links-red" class="filter-select">
+                                <option value="">Todos os REDs</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-links-disciplina">Disciplina</label>
+                            <select id="filter-links-disciplina" class="filter-select">
+                                <option value="">Todas as Disciplinas</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-links-ano">Ano de Escolaridade</label>
+                            <select id="filter-links-ano" class="filter-select">
+                                <option value="">Todos os Anos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-container">
+                        <div id="links-red-table-container">
+                            <div class="table-loader">A carregar dados dos Recursos Educativos Digitais...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SESSÕES DE PILOTAGEM -->
+                <div class="content-view" id="panel-pilotagem-sessoes">
+                    <h2 class="content-heading-1">Sessões de Pilotagem</h2>
+                    <p class="content-text">Registos fotográficos das sessões de pilotagem realizadas em Julho de 2026.</p>
+                    
+                    <div class="photo-gallery-grid" id="gallery-container"></div>
+                </div>
+
+                <!-- VÍDEOS INTRODUTÓRIOS -->
+                <div class="content-view" id="panel-pilotagem-videos">
+                    <h2 class="content-heading-1">Vídeos Introdutórios</h2>
+                    <p class="content-text">Assista aos vídeos abaixo para entender melhor a importância dos Recursos Educativos Digitais!</p>
+
+                    <div class="videos-grid-container">
+                        <div class="video-card-item">
+                            <h3 class="video-card-title"><i class="fa-solid fa-chalkboard-user"></i> Docentes</h3>
+                            <div class="vimeo-wrapper">
+                                <div style="padding:56.25% 0 0 0;position:relative;">
+                                    <iframe src="https://player.vimeo.com/video/1206390675?h=76f2ac31e1&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="VIDEO 1 - Docentes"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="video-card-item">
+                            <h3 class="video-card-title"><i class="fa-solid fa-child-reaching"></i> Alunos 1.º Ciclo</h3>
+                            <div class="vimeo-wrapper">
+                                <div style="padding:56.25% 0 0 0;position:relative;">
+                                    <iframe src="https://player.vimeo.com/video/1206390701?h=649ac39acc&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="VIDEO 2 - 1º ciclo"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="video-card-item">
+                            <h3 class="video-card-title"><i class="fa-solid fa-graduation-cap"></i> Alunos 2.º Ciclo</h3>
+                            <div class="vimeo-wrapper">
+                                <div style="padding:56.25% 0 0 0;position:relative;">
+                                    <iframe src="https://player.vimeo.com/video/1206390744?h=9a3afa6e71&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="VIDEO 3 - 2do ciclo"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="video-card-item">
+                            <h3 class="video-card-title"><i class="fa-solid fa-user-graduate"></i> Alunos 3.º Ciclo</h3>
+                            <div class="vimeo-wrapper">
+                                <div style="padding:56.25% 0 0 0;position:relative;">
+                                    <iframe src="https://player.vimeo.com/video/1206390737?h=248fb3d434&badge=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="VIDEO 4 - 3r ciclo"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script src="https://player.vimeo.com/api/player.js"></script>
+                </div>
+
+                <!-- QUESTIONÁRIOS DE AVALIAÇÃO E ANÁLISE DE RESULTADOS -->
+                <div class="content-view" id="panel-pilotagem-questionarios">
+                    <h2 class="content-heading-1">Questionários de Avaliação</h2>
+                    <p class="content-text" style="margin-bottom: 12px;">Aceda aos formulários de questionário (PDF) e aos respetivos dados das respostas recolhidas (.XLSX):</p>
+                    
+                    <div class="table-responsive-container" style="margin-bottom: 36px;">
+                        <div id="table-container">
+                            <div class="table-loader">A carregar tabela de questionários...</div>
+                        </div>
+                    </div>
+
+                    <h2 class="content-heading-1">Análise de Resultados</h2>
+                    <p class="content-text" style="margin-bottom: 12px;">Consulte os relatórios analíticos dos inquéritos aplicados aos docentes e alunos:</p>
+
+                    <div class="table-responsive-container">
+                        <div id="analise-table-container">
+                            <div class="table-loader">A carregar tabela de análise de resultados...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- APROVAÇÕES U.MINHO -->
+                <div class="content-view" id="panel-pilotagem-uminho">
+                    <h2 class="content-heading-1">Pareceres de Pré-pilotagem</h2>
+                    <p class="content-text" style="margin-bottom: 12px;">Consulte e faça o download dos pareceres em formato EML emitidos para os Recursos Educativos Digitais:</p>
+
+                    <div class="table-responsive-container">
+                        <div id="uminho-eml-table-container">
+                            <div class="table-loader">A carregar lista de pareceres...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GIRED PANELS -->
+                <div class="content-view" id="panel-gired-oq">
+                    <h2 class="content-heading-1">O que é o GiRED?</h2>
+                    <p class="content-text">Visão geral sobre o sistema de Gestão Integrada de RED.</p>
+                </div>
+
+                <div class="content-view" id="panel-gired-ia">
+                    <h2 class="content-heading-1">Criar um RED com IA</h2>
+                    <p class="content-text">Como utilizar inteligência artificial para otimizar a criação de conteúdos.</p>
+                </div>
+                
+                <div class="content-view" id="panel-gired-construir">
+                    <h2 class="content-heading-1">Construir Conteúdo</h2>
+                    <p class="content-text">Ferramentas e padrões de qualidade para o desenvolvimento das atividades.</p>
+                </div>
+
+                <div class="content-view" id="panel-gired-ideia">
+                    <h2 class="content-heading-1">Da Ideia ao RED Final</h2>
+                    <p class="content-text">Guia passo a passo do fluxo de trabalho e publicação.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Secção Inferior das Ilustrações -->
+    <div class="illustrations-section">
+        <div class="illustration-container">
+            <a href="https://i.imgur.com/harHv4o.png" target="_blank" rel="noopener noreferrer">
+                <img src="https://i.imgur.com/harHv4o.png" alt="Descrição da imagem">
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="eduqa-layout-footer">
+        <div class="footer-inner-container">
+            <div class="footer-logos-row">
+                <a href="./" class="footer-main-logo">
+                    <img src="https://i.imgur.com/Dc0uBa8.png" alt="RED" class="logo-red">
+                </a>
+                <div class="footer-partner-logos-group">
+                    <p class="funding-statement">O GiRED - Gestão Integrada de RED é financiado pelo Plano de Recuperação e Resiliência e o NextGenerationEU.</p>
+                    <p class="funding-statement">CLPQ 01/2025/DGE<br>AQUISIÇÃO DE SERVIÇOS PARA O DESENVOLVIMENTO DE RECURSOS EDUCATIVOS DIGITAIS PARA O ENSINO BÁSICO NAS ÁREAS DE PORTUGUÊS, MATEMÁTICA E CIÊNCIAS.</p>
+                </div>
+            </div>
+            <div class="footer-content-row">
+                <div class="footer-info-block">
+                    <div class="footer-funding-section">
+                        <div class="funding-inline-logos">
+                            <img src="https://i.imgur.com/CgbUEwi.png" alt="PRR" class="funding-logo">
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div> 
+
+<script>
+    // CAMINHO RELATIVO COMPATÍVEL COM VERCEL E AMBIENTES LOCAIS
+    const BASE_PATH = './'; 
+
+    const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRREjylh0mcjvTRSyr7dxfyMvjO23J2wV-SyWpDe2sswSdPz40rWronIxJXUqqohllk1U_jojRsqadA/pub?output=csv";
+    const LINKS_RED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9rk-7uX34gLLAADpYPbhpDifHYhs3Mdim2W7WXia9YJ_KeU3JCu8_bs8dhPNC6ILBTj7GArGFqjCu/pub?output=csv";
+
+    // Extensões suportadas para imagens
+    const extensions = ['.webp', '.jpeg', '.JPEG', '.jpg', '.JPG', '.png', '.PNG'];
+    
+    // Codifica corretamente Espaços (%20), Parênteses de Abertura (%28) e Fecho (%29)
+    function getPhotoPath(baseName, ext) {
+        const fullFileName = `${baseName}${ext}`;
+        const safeFileName = encodeURI(fullFileName)
+            .replace(/\(/g, '%28')
+            .replace(/\)/g, '%29');
+            
+        return `${BASE_PATH}${safeFileName}`;
+    }
+
+    function tryNextExtension(imgElement, linkId, baseName) {
+        let currentStep = parseInt(imgElement.getAttribute('data-ext-step') || '0');
+        currentStep++;
+        
+        if (currentStep < extensions.length) {
+            const nextExt = extensions[currentStep];
+            const newPath = getPhotoPath(baseName, nextExt);
+            
+            imgElement.setAttribute('data-ext-step', currentStep);
+            imgElement.src = newPath;
+            
+            const anchor = document.getElementById(linkId);
+            if (anchor) anchor.href = newPath;
+        } else {
+            imgElement.onerror = null;
+        }
+    }
+
+    function buildGallery() {
+        const galleryContainer = document.getElementById('gallery-container');
+        if (!galleryContainer) return;
+        
+        let galleryHTML = '';
+        const totalFotos = 31;
+
+        for (let i = 1; i <= totalFotos; i++) {
+            const baseName = `foto-pilotagem (${i})`;
+            const initialPath = getPhotoPath(baseName, extensions[0]);
+            
+            galleryHTML += `
+                <div class="photo-card">
+                    <a id="link-foto-${i}" href="${initialPath}" target="_blank">
+                        <img src="${initialPath}" data-ext-step="0" alt="Sessão de Pilotagem ${i}" onerror="tryNextExtension(this, 'link-foto-${i}', '${baseName}')">
+                    </a>
+                </div>
+            `;
+        }
+        galleryContainer.innerHTML = galleryHTML;
+    }
+
+    let globalQuestionarios = [];
+    let globalAnaliseResultados = [];
+    let globalUminhoEml = [];
+    let pilotagemRawData = [];
+    let linksRedRawData = [];
+
+    window.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
+        buildGallery();
+        
+        globalQuestionarios = [
+            {
+                'PÚBLICO': 'Professores', 
+                'INICIAL_PDF': `${BASE_PATH}questionario-inicial-professores.pdf`, 
+                'INICIAL_XLSX': `${BASE_PATH}Questionário inicial [Professores] (Responses).xlsx`, 
+                'FINAL_PDF': `${BASE_PATH}questionario-final-professores.pdf`,
+                'FINAL_XLSX': `${BASE_PATH}Questionário final [Professores] (Responses).xlsx`
+            },
+            {
+                'PÚBLICO': 'Alunos 1.º Ciclo', 
+                'INICIAL_PDF': `${BASE_PATH}questionario-inicial-1-ciclo.pdf`, 
+                'INICIAL_XLSX': `${BASE_PATH}Questionário inicial [1º Ciclo] (Responses).xlsx`, 
+                'FINAL_PDF': `${BASE_PATH}questionario-final-1-ciclo.pdf`,
+                'FINAL_XLSX': `${BASE_PATH}Questionário final [1º Ciclo] (Responses).xlsx`
+            },
+            {
+                'PÚBLICO': 'Alunos 2.º e 3.º Ciclo', 
+                'INICIAL_PDF': `${BASE_PATH}questionario-inicial-2-3-ciclo.pdf`, 
+                'INICIAL_XLSX': `${BASE_PATH}Questionário inicial [Alunos 2º e 3º Ciclos] (Responses).xlsx`, 
+                'FINAL_PDF': `${BASE_PATH}questionario-final-2-3-ciclo.pdf`,
+                'FINAL_XLSX': `${BASE_PATH}Questionário final [Alunos 2º e 3º Ciclos] (Responses).xlsx`
+            }
+        ];
+
+        globalAnaliseResultados = [
+            {
+                'DOCUMENTO': 'Análise de Resultados de Inquéritos - Professores',
+                'FICHEIRO': `${BASE_PATH}E2.7 – Analise de Resultados de Inqueritos Professores.pdf`
+            },
+            {
+                'DOCUMENTO': 'Análise de Resultados de Inquéritos - 1.º Ciclo',
+                'FICHEIRO': `${BASE_PATH}E2.7 – Analise de Resultados de Inqueritos 1.ºCiclo.pdf`
+            },
+            {
+                'DOCUMENTO': 'Análise de Resultados de Inquéritos - 2.º e 3.º Ciclos',
+                'FICHEIRO': `${BASE_PATH}E2.7 – Analise de Resultados de Inqueritos 2. E 3.º Ciclos.pdf`
+            }
+        ];
+
+        globalUminhoEml = [
+            "Parecer RED CN05 pré-pilotagem.eml",
+            "Parecer RED CN06 pré-pilotagem.eml",
+            "Parecer RED CN07 pré-pilotagem.eml",
+            "Parecer RED CN08 pré-pilotagem.eml",
+            "Parecer RED CN09 pré-pilotagem.eml",
+            "Parecer RED EM01 pré-pilotagem.eml",
+            "Parecer RED EM03 pré-pilotagem.eml",
+            "Parecer RED FQ07 pré-pilotagem.eml",
+            "Parecer RED FQ08 pré-pilotagem.eml",
+            "Parecer RED FQ09 pré-pilotagem.eml",
+            "Parecer RED MAT01 pré-pilotagem.eml",
+            "Parecer RED MAT03 pré-pilotagem.eml",
+            "Parecer RED MAT04 pré-pilotagem.eml",
+            "Parecer RED MAT05 pré-pilotagem.eml",
+            "Parecer RED MAT06 pré-pilotagem.eml",
+            "Parecer RED MAT07 pré-pilotagem.eml",
+            "Parecer RED MAT09 pré-pilotagem.eml",
+            "Parecer RED PORT01 pré-pilotagem.eml",
+            "Parecer RED PORT03 pré-pilotagem.eml",
+            "Parecer RED PORT05 pré-pilotagem.eml",
+            "Parecer RED PORT06 pré-pilotagem.eml",
+            "Parecer RED PORT07 pré-pilotagem.eml",
+            "Parecer RED PORT08 pré-pilotagem.eml",
+            "Parecer RED PORT09 pré-pilotagem.eml",
+            "Pareceres Pré-pilotagem.eml"
+        ];
+        
+        renderQuestionariosTable(globalQuestionarios);
+        renderAnaliseTable(globalAnaliseResultados);
+        renderUminhoEmlTable(globalUminhoEml);
+        fetchPilotagemCSV();
+        fetchLinksRedCSV();
+    });
+
+    function fetchPilotagemCSV() {
+        Papa.parse(CSV_URL, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                pilotagemRawData = results.data;
+                populateFilterOptions(pilotagemRawData);
+                renderPilotagemTable(pilotagemRawData);
+                setupFilterListeners();
+            },
+            error: function(err) {
+                const container = document.getElementById('pilotagem-table-container');
+                if (container) {
+                    container.innerHTML = `<div class="table-loader">Erro ao carregar dados do CSV.</div>`;
+                }
+            }
+        });
+    }
+
+    function fetchLinksRedCSV() {
+        Papa.parse(LINKS_RED_CSV_URL, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                if (!results.data || results.data.length === 0) return;
+
+                linksRedRawData = results.data.map(row => {
+                    const newRow = {};
+                    Object.keys(row).forEach(key => {
+                        const trimmedKey = key.trim();
+                        if (trimmedKey.toLowerCase().includes('ciclo')) {
+                            newRow['Ano de Escolaridade'] = row[key];
+                        } else {
+                            newRow[trimmedKey] = row[key];
+                        }
+                    });
+                    return newRow;
+                });
+
+                populateLinksRedFilterOptions(linksRedRawData);
+                renderLinksRedTable(linksRedRawData);
+                setupLinksRedFilterListeners();
+            },
+            error: function(err) {
+                const container = document.getElementById('links-red-table-container');
+                if (container) {
+                    container.innerHTML = `<div class="table-loader">Erro ao carregar dados dos Links RED.</div>`;
+                }
+            }
+        });
+    }
+
+    function populateFilterOptions(data) {
+        const selectData = document.getElementById('filter-data');
+        const selectAE = document.getElementById('filter-ae');
+        const selectAno = document.getElementById('filter-ano');
+        const selectRealizou = document.getElementById('filter-realizou');
+
+        if (!selectData || !selectAE || !selectAno || !selectRealizou) return;
+
+        const datas = new Set();
+        const aes = new Set();
+        const anos = new Set();
+        const realizous = new Set();
+
+        data.forEach(row => {
+            Object.keys(row).forEach(key => {
+                const trimmedKey = key.trim();
+                const value = (row[key] || '').trim();
+                if (!value) return;
+
+                const keyLower = trimmedKey.toLowerCase();
+
+                if (keyLower.includes('data')) datas.add(value);
+                else if (keyLower === 'ae' || keyLower.includes('agrupamento')) aes.add(value);
+                else if (keyLower.includes('ano')) anos.add(value);
+                else if (keyLower.includes('realizou')) realizous.add(value);
+            });
+        });
+
+        const fillSelect = (select, set) => {
+            Array.from(set).sort().forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                select.appendChild(opt);
+            });
+        };
+
+        fillSelect(selectData, datas);
+        fillSelect(selectAE, aes);
+        fillSelect(selectAno, anos);
+        fillSelect(selectRealizou, realizous);
+    }
+
+    function populateLinksRedFilterOptions(data) {
+        const selectRed = document.getElementById('filter-links-red');
+        const selectDisc = document.getElementById('filter-links-disciplina');
+        const selectAno = document.getElementById('filter-links-ano');
+
+        if (!selectRed || !selectDisc || !selectAno) return;
+
+        const reds = new Set();
+        const disciplinas = new Set();
+        const anos = new Set();
+
+        data.forEach(row => {
+            Object.keys(row).forEach(key => {
+                const trimmedKey = key.trim();
+                const value = (row[key] || '').trim();
+                if (!value) return;
+
+                const keyLower = trimmedKey.toLowerCase();
+
+                if (keyLower.includes('red') || keyLower.includes('recurso') || keyLower.includes('nome')) reds.add(value);
+                else if (keyLower.includes('disciplina')) disciplinas.add(value);
+                else if (keyLower.includes('ano')) anos.add(value);
+            });
+        });
+
+        const fillSelect = (select, set) => {
+            Array.from(set).sort().forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                select.appendChild(opt);
+            });
+        };
+
+        fillSelect(selectRed, reds);
+        fillSelect(selectDisc, disciplinas);
+        fillSelect(selectAno, anos);
+    }
+
+    function setupFilterListeners() {
+        const selectData = document.getElementById('filter-data');
+        const selectAE = document.getElementById('filter-ae');
+        const selectAno = document.getElementById('filter-ano');
+        const selectRealizou = document.getElementById('filter-realizou');
+
+        const filterHandler = () => {
+            const valData = selectData.value.toLowerCase();
+            const valAE = selectAE.value.toLowerCase();
+            const valAno = selectAno.value.toLowerCase();
+            const valRealizou = selectRealizou.value.toLowerCase();
+
+            const filtered = pilotagemRawData.filter(row => {
+                let matchesData = !valData;
+                let matchesAE = !valAE;
+                let matchesAno = !valAno;
+                let matchesRealizou = !valRealizou;
+
+                Object.keys(row).forEach(key => {
+                    const trimmedKey = key.trim().toLowerCase();
+                    const value = (row[key] || '').trim().toLowerCase();
+
+                    if (trimmedKey.includes('data') && valData && value === valData) matchesData = true;
+                    if ((trimmedKey === 'ae' || trimmedKey.includes('agrupamento')) && valAE && value === valAE) matchesAE = true;
+                    if (trimmedKey.includes('ano') && valAno && value === valAno) matchesAno = true;
+                    if (trimmedKey.includes('realizou') && valRealizou && value === valRealizou) matchesRealizou = true;
+                });
+
+                return matchesData && matchesAE && matchesAno && matchesRealizou;
+            });
+
+            renderPilotagemTable(filtered);
+        };
+
+        selectData.addEventListener('change', filterHandler);
+        selectAE.addEventListener('change', filterHandler);
+        selectAno.addEventListener('change', filterHandler);
+        selectRealizou.addEventListener('change', filterHandler);
+    }
+
+    function setupLinksRedFilterListeners() {
+        const selectRed = document.getElementById('filter-links-red');
+        const selectDisc = document.getElementById('filter-links-disciplina');
+        const selectAno = document.getElementById('filter-links-ano');
+
+        const filterHandler = () => {
+            const valRed = selectRed.value.toLowerCase();
+            const valDisc = selectDisc.value.toLowerCase();
+            const valAno = selectAno.value.toLowerCase();
+
+            const filtered = linksRedRawData.filter(row => {
+                let matchesRed = !valRed;
+                let matchesDisc = !valDisc;
+                let matchesAno = !valAno;
+
+                Object.keys(row).forEach(key => {
+                    const trimmedKey = key.trim().toLowerCase();
+                    const value = (row[key] || '').trim().toLowerCase();
+
+                    if ((trimmedKey.includes('red') || trimmedKey.includes('recurso') || trimmedKey.includes('nome')) && valRed && value === valRed) matchesRed = true;
+                    if (trimmedKey.includes('disciplina') && valDisc && value === valDisc) matchesDisc = true;
+                    if (trimmedKey.includes('ano') && valAno && value === valAno) matchesAno = true;
+                });
+
+                return matchesRed && matchesDisc && matchesAno;
+            });
+
+            renderLinksRedTable(filtered);
+        };
+
+        selectRed.addEventListener('change', filterHandler);
+        selectDisc.addEventListener('change', filterHandler);
+        selectAno.addEventListener('change', filterHandler);
+    }
+
+    function renderPilotagemTable(data) {
+        const container = document.getElementById('pilotagem-table-container');
+        if (!container) return;
+
+        if (!data || data.length === 0) {
+            container.innerHTML = `<div class="table-loader">Nenhum resultado encontrado.</div>`;
+            return;
+        }
+
+        const headers = Object.keys(data[0]);
+
+        let html = `
+            <table class="dynamic-table">
+                <thead>
+                    <tr>
+        `;
+
+        headers.forEach(header => {
+            html += `<th>${header.trim()}</th>`;
+        });
+
+        html += `
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.forEach(row => {
+            html += `<tr>`;
+            headers.forEach(header => {
+                const val = (row[header] || '-').trim();
+
+                if (typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'))) {
+                    html += `<td><a href="${val}" target="_blank" class="btn-aceder-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder</a></td>`;
+                } else {
+                    html += `<td>${val}</td>`;
+                }
+            });
+            html += `</tr>`;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    function renderLinksRedTable(data) {
+        const container = document.getElementById('links-red-table-container');
+        if (!container) return;
+
+        if (!data || data.length === 0) {
+            container.innerHTML = `<div class="table-loader">Nenhum resultado encontrado.</div>`;
+            return;
+        }
+
+        const headers = Object.keys(data[0]);
+
+        let html = `
+            <table class="dynamic-table">
+                <thead>
+                    <tr>
+        `;
+
+        headers.forEach(header => {
+            html += `<th>${header.trim()}</th>`;
+        });
+
+        html += `
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.forEach(row => {
+            html += `<tr>`;
+            headers.forEach(header => {
+                const val = (row[header] || '-').trim();
+
+                if (typeof val === 'string' && (val.startsWith('http://') || val.startsWith('https://'))) {
+                    html += `<td><a href="${val}" target="_blank" class="btn-aceder-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder</a></td>`;
+                } else {
+                    html += `<td>${val}</td>`;
+                }
+            });
+            html += `</tr>`;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    function renderQuestionariosTable(data) {
+        const container = document.getElementById('table-container');
+        if (!container) return;
+
+        if (data.length === 0) {
+            container.innerHTML = `<div class="table-loader">Nenhum resultado encontrado.</div>`;
+            return;
+        }
+
+        let html = `
+            <table class="dynamic-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%">Público</th>
+                        <th style="width: 18.5%; text-align: center;">Q. Inicial (PDF)</th>
+                        <th style="width: 18.5%; text-align: center;">Respostas Inicial (XLSX)</th>
+                        <th style="width: 18.5%; text-align: center;">Q. Final (PDF)</th>
+                        <th style="width: 18.5%; text-align: center;">Respostas Final (XLSX)</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.forEach(row => {
+            const publico = row['PÚBLICO'] || '-';
+            const inicialPdf = (row['INICIAL_PDF'] || '').trim();
+            const inicialXlsx = (row['INICIAL_XLSX'] || '').trim();
+            const finalPdf = (row['FINAL_PDF'] || '').trim();
+            const finalXlsx = (row['FINAL_XLSX'] || '').trim();
+
+            const renderButton = (link, isExcel = false) => {
+                if (!link || link === '#') {
+                    return '<span style="color: #94a3b8; font-size: 11px;">Indisponível</span>';
+                }
+                const encodedLink = encodeURI(link).replace(/\(/g, '%28').replace(/\)/g, '%29');
+                const btnClass = isExcel ? 'btn-aceder-sm btn-aceder-green' : 'btn-aceder-sm';
+                const iconClass = isExcel ? 'fa-solid fa-file-excel' : 'fa-solid fa-file-pdf';
+                const btnLabel = isExcel ? 'Excel' : 'PDF';
+
+                return `<a href="${encodedLink}" target="_blank" class="${btnClass}">
+                            <i class="${iconClass}"></i> ${btnLabel}
+                        </a>`;
+            };
+
+            html += `
+                <tr>
+                    <td><strong>${publico}</strong></td>
+                    <td style="text-align: center;">${renderButton(inicialPdf, false)}</td>
+                    <td style="text-align: center;">${renderButton(inicialXlsx, true)}</td>
+                    <td style="text-align: center;">${renderButton(finalPdf, false)}</td>
+                    <td style="text-align: center;">${renderButton(finalXlsx, true)}</td>
+                </tr>
+            `;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    function renderAnaliseTable(data) {
+        const container = document.getElementById('analise-table-container');
+        if (!container) return;
+
+        if (data.length === 0) {
+            container.innerHTML = `<div class="table-loader">Nenhum resultado encontrado.</div>`;
+            return;
+        }
+
+        let html = `
+            <table class="dynamic-table">
+                <thead>
+                    <tr>
+                        <th>Relatório de Análise</th>
+                        <th style="text-align: center; width: 150px;">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        data.forEach(row => {
+            const doc = row['DOCUMENTO'];
+            const fileLink = encodeURI(row['FICHEIRO']).replace(/\(/g, '%28').replace(/\)/g, '%29');
+
+            html += `
+                <tr>
+                    <td><strong>${doc}</strong></td>
+                    <td style="text-align: center;">
+                        <a href="${fileLink}" target="_blank" class="btn-aceder-sm">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Aceder
+                        </a>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    function renderUminhoEmlTable(filesList) {
+        const container = document.getElementById('uminho-eml-table-container');
+        if (!container) return;
+
+        if (filesList.length === 0) {
+            container.innerHTML = `<div class="table-loader">Nenhum parecer encontrado.</div>`;
+            return;
+        }
+
+        let html = `
+            <table class="dynamic-table">
+                <thead>
+                    <tr>
+                        <th>Documento / Parecer (EML)</th>
+                        <th style="text-align: center; width: 150px;">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        filesList.forEach(fileName => {
+            const fullPath = `${BASE_PATH}${fileName}`;
+            const encodedPath = encodeURI(fullPath).replace(/\(/g, '%28').replace(/\)/g, '%29');
+
+            html += `
+                <tr>
+                    <td><strong>${fileName}</strong></td>
+                    <td style="text-align: center;">
+                        <a href="${encodedPath}" target="_blank" class="btn-aceder-sm">
+                            <i class="fa-solid fa-download"></i> Download
+                        </a>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += `
+                </tbody>
+            </table>
+        `;
+
+        container.innerHTML = html;
+    }
+</script>
+</body>
+</html>
