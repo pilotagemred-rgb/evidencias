@@ -1018,6 +1018,7 @@
 </div> 
 
 <script>
+    console.log("estou aqui")
     document.querySelectorAll('[src]').forEach(elemento => {
         if (elemento.src.startsWith(domainActual)) {
             elemento.src = elemento.src.replace(domainActual, newDomain);
