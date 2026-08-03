@@ -1005,23 +1005,31 @@
 </div> 
 
 <script>
-    // CAMINHO RELATIVO COMPATÍVEL COM VERCEL E AMBIENTES LOCAIS
+    // CAMINHO BASE APONTANDO PARA A VERCEL
     const BASE_PATH = 'https://lms.gired.pt/';
 
     const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRREjylh0mcjvTRSyr7dxfyMvjO23J2wV-SyWpDe2sswSdPz40rWronIxJXUqqohllk1U_jojRsqadA/pub?output=csv";
     const LINKS_RED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR9rk-7uX34gLLAADpYPbhpDifHYhs3Mdim2W7WXia9YJ_KeU3JCu8_bs8dhPNC6ILBTj7GArGFqjCu/pub?output=csv";
 
+    // Função auxiliar para codificar corretamente QUALQUER nome de ficheiro
+    function buildSafeUrl(filename) {
+        if (!filename) return '#';
+        if (filename.startsWith('http://') || filename.startsWith('https://')) {
+            return filename;
+        }
+        // Remove barras no início se existirem
+        const cleanName = filename.replace(/^\//, '');
+        
+        // Codifica todos os caracteres especiais (espaços, [], (), acentos, º, –)
+        const encodedName = cleanName.split('/').map(part => encodeURIComponent(part)).join('/');
+        return `${BASE_PATH}${encodedName}`;
+    }
+
     // Extensões suportadas para imagens
     const extensions = ['.webp', '.jpeg', '.JPEG', '.jpg', '.JPG', '.png', '.PNG'];
     
-    // Codifica corretamente Espaços (%20), Parênteses de Abertura (%28) e Fecho (%29)
     function getPhotoPath(baseName, ext) {
-        const fullFileName = `${baseName}${ext}`;
-        const safeFileName = encodeURI(fullFileName)
-            .replace(/\(/g, '%28')
-            .replace(/\)/g, '%29');
-            
-        return `${BASE_PATH}${safeFileName}`;
+        return buildSafeUrl(`${baseName}${ext}`);
     }
 
     function tryNextExtension(imgElement, linkId, baseName) {
@@ -1077,39 +1085,39 @@
         globalQuestionarios = [
             {
                 'PÚBLICO': 'Professores', 
-                'INICIAL_PDF': `${BASE_PATH}questionario-inicial-professores.pdf`, 
-                'INICIAL_XLSX': `${BASE_PATH}Questionário inicial [Professores] (Responses).xlsx`, 
-                'FINAL_PDF': `${BASE_PATH}questionario-final-professores.pdf`,
-                'FINAL_XLSX': `${BASE_PATH}Questionário final [Professores] (Responses).xlsx`
+                'INICIAL_PDF': buildSafeUrl('questionario-inicial-professores.pdf'), 
+                'INICIAL_XLSX': buildSafeUrl('Questionário inicial [Professores] (Responses).xlsx'), 
+                'FINAL_PDF': buildSafeUrl('questionario-final-professores.pdf'),
+                'FINAL_XLSX': buildSafeUrl('Questionário final [Professores] (Responses).xlsx')
             },
             {
                 'PÚBLICO': 'Alunos 1.º Ciclo', 
-                'INICIAL_PDF': `${BASE_PATH}questionario-inicial-1-ciclo.pdf`, 
-                'INICIAL_XLSX': `${BASE_PATH}Questionário inicial [1º Ciclo] (Responses).xlsx`, 
-                'FINAL_PDF': `${BASE_PATH}questionario-final-1-ciclo.pdf`,
-                'FINAL_XLSX': `${BASE_PATH}Questionário final [1º Ciclo] (Responses).xlsx`
+                'INICIAL_PDF': buildSafeUrl('questionario-inicial-1-ciclo.pdf'), 
+                'INICIAL_XLSX': buildSafeUrl('Questionário inicial [1º Ciclo] (Responses).xlsx'), 
+                'FINAL_PDF': buildSafeUrl('questionario-final-1-ciclo.pdf'),
+                'FINAL_XLSX': buildSafeUrl('Questionário final [1º Ciclo] (Responses).xlsx')
             },
             {
                 'PÚBLICO': 'Alunos 2.º e 3.º Ciclo', 
-                'INICIAL_PDF': `${BASE_PATH}questionario-inicial-2-3-ciclo.pdf`, 
-                'INICIAL_XLSX': `${BASE_PATH}Questionário inicial [Alunos 2º e 3º Ciclos] (Responses).xlsx`, 
-                'FINAL_PDF': `${BASE_PATH}questionario-final-2-3-ciclo.pdf`,
-                'FINAL_XLSX': `${BASE_PATH}Questionário final [Alunos 2º e 3º Ciclos] (Responses).xlsx`
+                'INICIAL_PDF': buildSafeUrl('questionario-inicial-2-3-ciclo.pdf'), 
+                'INICIAL_XLSX': buildSafeUrl('Questionário inicial [Alunos 2º e 3º Ciclos] (Responses).xlsx'), 
+                'FINAL_PDF': buildSafeUrl('questionario-final-2-3-ciclo.pdf'),
+                'FINAL_XLSX': buildSafeUrl('Questionário final [Alunos 2º e 3º Ciclos] (Responses).xlsx')
             }
         ];
 
         globalAnaliseResultados = [
             {
                 'DOCUMENTO': 'Análise de Resultados de Inquéritos - Professores',
-                'FICHEIRO': `${BASE_PATH}E2.7 – Analise de Resultados de Inqueritos Professores.pdf`
+                'FICHEIRO': buildSafeUrl('E2.7 – Analise de Resultados de Inqueritos Professores.pdf')
             },
             {
                 'DOCUMENTO': 'Análise de Resultados de Inquéritos - 1.º Ciclo',
-                'FICHEIRO': `${BASE_PATH}E2.7 – Analise de Resultados de Inqueritos 1.ºCiclo.pdf`
+                'FICHEIRO': buildSafeUrl('E2.7 – Analise de Resultados de Inqueritos 1.ºCiclo.pdf')
             },
             {
                 'DOCUMENTO': 'Análise de Resultados de Inquéritos - 2.º e 3.º Ciclos',
-                'FICHEIRO': `${BASE_PATH}E2.7 – Analise de Resultados de Inqueritos 2. E 3.º Ciclos.pdf`
+                'FICHEIRO': buildSafeUrl('E2.7 – Analise de Resultados de Inqueritos 2. E 3.º Ciclos.pdf')
             }
         ];
 
@@ -1491,12 +1499,11 @@
                 if (!link || link === '#') {
                     return '<span style="color: #94a3b8; font-size: 11px;">Indisponível</span>';
                 }
-                const encodedLink = encodeURI(link).replace(/\(/g, '%28').replace(/\)/g, '%29');
                 const btnClass = isExcel ? 'btn-aceder-sm btn-aceder-green' : 'btn-aceder-sm';
                 const iconClass = isExcel ? 'fa-solid fa-file-excel' : 'fa-solid fa-file-pdf';
                 const btnLabel = isExcel ? 'Excel' : 'PDF';
 
-                return `<a href="${encodedLink}" target="_blank" class="${btnClass}">
+                return `<a href="${link}" target="_blank" class="${btnClass}">
                             <i class="${iconClass}"></i> ${btnLabel}
                         </a>`;
             };
@@ -1542,7 +1549,7 @@
 
         data.forEach(row => {
             const doc = row['DOCUMENTO'];
-            const fileLink = encodeURI(row['FICHEIRO']).replace(/\(/g, '%28').replace(/\)/g, '%29');
+            const fileLink = row['FICHEIRO'];
 
             html += `
                 <tr>
@@ -1585,14 +1592,13 @@
         `;
 
         filesList.forEach(fileName => {
-            const fullPath = `${BASE_PATH}${fileName}`;
-            const encodedPath = encodeURI(fullPath).replace(/\(/g, '%28').replace(/\)/g, '%29');
+            const fullPath = buildSafeUrl(fileName);
 
             html += `
                 <tr>
                     <td><strong>${fileName}</strong></td>
                     <td style="text-align: center;">
-                        <a href="${encodedPath}" target="_blank" class="btn-aceder-sm">
+                        <a href="${fullPath}" target="_blank" class="btn-aceder-sm">
                             <i class="fa-solid fa-download"></i> Download
                         </a>
                     </td>
