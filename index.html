@@ -1043,20 +1043,23 @@
     }
 
     function tryNextExtension(imgElement, linkId, baseName) {
-        let currentStep = parseInt(imgElement.getAttribute('data-ext-step') || '0');
-        currentStep++;
+    let currentStep = parseInt(imgElement.getAttribute('data-ext-step') || '0');
+    currentStep++;
+    
+    if (currentStep < extensions.length) {
+        const nextExt = extensions[currentStep];
+        const newPath = getPhotoPath(baseName, nextExt);
         
-        if (currentStep < extensions.length) {
-            const nextExt = extensions[currentStep];
-            const newPath = getPhotoPath(baseName, nextExt);
-            
-            imgElement.setAttribute('data-ext-step', currentStep);
-            imgElement.src = newPath;
-            
-            const anchor = document.getElementById(linkId);
-            if (anchor) anchor.href = newPath;
+        imgElement.setAttribute('data-ext-step', currentStep);
+        imgElement.src = newPath;
+        
+        const anchor = document.getElementById(linkId);
+        if (anchor) anchor.href = newPath;
         } else {
-            imgElement.onerror = null;
+        imgElement.onerror = null;
+        // Oculta o cartão (.photo-card) se a imagem não existir
+        const card = imgElement.closest('.photo-card');
+        if (card) card.style.display = 'none';
         }
     }
 
