@@ -53,19 +53,19 @@ export const ANALISE_RESULTADOS: AnaliseRow[] = [
   {
     documento: "Análise de Resultados de Inquéritos - Professores",
     ficheiro: buildSafeUrl(
-      "E2.7 – Analise de Resultados de Inqueritos Professores.pdf"
+      "RED - E2.7 - Resultados Inqueritos_professores.pdf"
     ),
   },
   {
     documento: "Análise de Resultados de Inquéritos - 1.º Ciclo",
     ficheiro: buildSafeUrl(
-      "E2.7 – Analise de Resultados de Inqueritos 1.ºCiclo.pdf"
+      "RED - E2.7 - Resultados Inqueritos_1.ºCiclo.pdf"
     ),
   },
   {
     documento: "Análise de Resultados de Inquéritos - 2.º e 3.º Ciclos",
     ficheiro: buildSafeUrl(
-      "E2.7 – Analise de Resultados de Inqueritos 2. E 3.º Ciclos.pdf"
+      "RED - E2.7 - Resultados Inqueritos_2.º e 3.º Ciclo.pdf"
     ),
   },
 ];
@@ -112,7 +112,7 @@ export const GALLERY_PHOTO_COUNT = 31;
 
 export const PROTOCOLO_PDF =
   process.env.NEXT_PUBLIC_PROTOCOLO_URL ||
-  "https://drive.google.com/drive/folders/19SvDFVMhY2RMiFAJd375jbuLkg9rDMAv";
+  buildSafeUrl("red-protocolo-de-pilotagem-vfinal.pdf");
 
 export const DRIVE_FOLDERS = {
   root: "https://drive.google.com/drive/folders/1mQlvyV_0rx0bA8NuOLPyTAeRsNcVb5ZS",

@@ -1,7 +1,9 @@
-const DEFAULT_ASSETS_BASE = "https://hub-v-deos.vercel.app";
-
+/**
+ * Asset URLs default to same-origin (`/public` files).
+ * Override with NEXT_PUBLIC_ASSETS_BASE only if assets live on another host.
+ */
 export function getAssetsBase(): string {
-  const base = process.env.NEXT_PUBLIC_ASSETS_BASE || DEFAULT_ASSETS_BASE;
+  const base = process.env.NEXT_PUBLIC_ASSETS_BASE?.trim() ?? "";
   return base.replace(/\/$/, "");
 }
 
@@ -22,7 +24,8 @@ export function buildSafeUrl(filename: string): string {
     .map((part) => encodeURIComponent(part))
     .join("/");
 
-  return `${getAssetsBase()}/${encoded}`;
+  const base = getAssetsBase();
+  return base ? `${base}/${encoded}` : `/${encoded}`;
 }
 
 export function isLinkCell(value: string): boolean {

@@ -15,8 +15,8 @@ export function ProtocoloPanel() {
           rel="noopener noreferrer"
           className="btn-aceder-pill"
         >
-          <i className="fa-solid fa-folder-open" style={{ marginRight: 8 }} />
-          Aceder ao Protocolo (Drive)
+          <i className="fa-solid fa-file-pdf" style={{ marginRight: 8 }} />
+          Aceder ao Protocolo (PDF)
         </a>
       </div>
     </div>
