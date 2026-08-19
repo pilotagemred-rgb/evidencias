@@ -15,6 +15,7 @@ import { VideosPanel } from "@/components/panels/VideosPanel";
 import { QuestionariosPanel } from "@/components/panels/QuestionariosPanel";
 import { UminhoPanel } from "@/components/panels/UminhoPanel";
 import { GiredPlaceholderPanel } from "@/components/panels/GiredPlaceholderPanel";
+import { FrameHeightReporter } from "@/components/FrameHeightReporter";
 import type { ViewId } from "@/lib/views";
 
 export function HubShell() {
@@ -22,6 +23,7 @@ export function HubShell() {
 
   return (
     <div className="main" data-view={view}>
+      <FrameHeightReporter resetKey={view} />
       <Header />
 
       <div className="page-header-container">
