@@ -63,7 +63,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   {
     id: "pilotagem",
-    label: "Entrega 31 Julho",
+    label: "REDs",
     triggerClass: "trigger-pilotagem",
     items: [
       {
@@ -112,7 +112,7 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   {
     id: "gired",
-    label: "GiRED",
+    label: "Sobre o GiRED",
     triggerClass: "trigger-gired",
     items: [
       {
@@ -135,7 +135,7 @@ export const NAV_GROUPS: NavGroup[] = [
       },
       {
         view: "gired-ideia",
-        label: "Da ideia ao RED final",
+        label: "Validação e testes",
         icon: FileText,
         buttonClass: "sub-btn-gired-ideia",
       },
