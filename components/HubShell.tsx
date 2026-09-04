@@ -56,8 +56,8 @@ export function HubShell() {
 
           <div className="main-content-display">
             <WelcomePanel />
-            <SobreOqPanel />
-            <SobreSasPanel />
+            <SobreOqPanel id="panel-ea-oq" folder="eavideo1" />
+            <SobreSasPanel id="panel-ea-sas" folder="eavideo2" />
             <ProtocoloPanel />
             <PilotagemTablePanel />
             <LinksRedPanel />
@@ -66,25 +66,29 @@ export function HubShell() {
             <QuestionariosPanel />
             <UminhoPanel />
             <GiredPlaceholderPanel
-              id="panel-gired-oq"
-              title="O que é o GiRED?"
-              description="Visão geral sobre o sistema de Gestão Integrada de RED."
-            />
-            <GiredPlaceholderPanel
-              id="panel-gired-ia"
-              title="Criar um RED com IA"
-              description="Como utilizar inteligência artificial para otimizar a criação de conteúdos."
-            />
-            <GiredPlaceholderPanel
-              id="panel-gired-construir"
-              title="Construir Conteúdo"
-              description="Ferramentas e padrões de qualidade para o desenvolvimento das atividades."
-            />
-            <GiredPlaceholderPanel
-              id="panel-gired-ideia"
-              title="Da Ideia ao RED Final"
-              description="Guia passo a passo do fluxo de trabalho e publicação."
-            />
+                id="panel-gired-oq"
+                title="O que é o GiRED?"
+                description="Visão geral sobre o sistema de Gestão Integrada de RED."
+                folder="giredvideo1"
+              />
+              <GiredPlaceholderPanel
+                id="panel-gired-ia"
+                title="Criar um RED com IA"
+                description="Como utilizar inteligência artificial para otimizar a criação de conteúdos."
+                folder="giredvideo2"
+              />
+              <GiredPlaceholderPanel
+                id="panel-gired-construir"
+                title="Construir Conteúdo"
+                description="Ferramentas e padrões de qualidade para o desenvolvimento das atividades."
+                folder="giredvideo3"
+              />
+              <GiredPlaceholderPanel
+                id="panel-gired-ideia"
+                title="Validação e testes"
+                description="Guia e processos de validação e testes de qualidade dos RED."
+                folder="giredvideo4"
+              />
           </div>
         </div>
       </div>

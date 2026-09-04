@@ -1,17 +1,55 @@
-import { VimeoEmbed } from "@/components/VimeoEmbed";
+"use client";
 
-export function SobreSasPanel() {
+import { useDriveFiles } from "@/hooks/useDriveFiles";
+import { type DriveFolderKey } from "@/lib/drive/types";
+
+type PanelProps = {
+  id?: string;
+  folder?: DriveFolderKey;
+};
+
+export function SobreSasPanel({ id = "panel-ea-sas", folder = "eavideo2" }: PanelProps) {
+  const { files, loading, error, configured } = useDriveFiles(folder);
+
   return (
-    <div className="content-view" id="panel-sobre-sas">
+    <div className="content-view" id={id}>
       <h2 className="content-heading-1">SAs e Atividades</h2>
-      <p className="content-text">
-        Detalhamento da estrutura das Sequências de Aprendizagem (SA) e tipos de
-        atividades disponíveis.
+      <p className="content-text" style={{ marginBottom: 12 }}>
+        Vídeos e recursos sobre as Situações de Aprendizagem e Atividades do EA:
       </p>
-      <VimeoEmbed
-        src="https://player.vimeo.com/video/1214505914?h=e786957d6b&badge=0&autopause=0&player_id=0&app_id=58479"
-        title="Video 2_Guia de utilização SAs"
-      />
+
+      <div className="table-responsive-container">
+        {loading && <div className="table-loader">A carregar conteúdos...</div>}
+
+        {!loading && (!configured || error || files.length === 0) && (
+          <div className="table-loader">
+            {error ? `Erro: ${error}` : "Nenhum conteúdo encontrado nesta pasta."}
+          </div>
+        )}
+
+        {!loading && files.length > 0 && (
+          <table className="dynamic-table">
+            <thead>
+              <tr>
+                <th>Nome do Vídeo / Conteúdo</th>
+                <th style={{ textAlign: "center", width: 150 }}>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((file) => (
+                <tr key={file.id}>
+                  <td><strong>{file.name}</strong></td>
+                  <td style={{ textAlign: "center" }}>
+                    <a href={file.url} target="_blank" rel="noopener noreferrer" className="btn-aceder-sm">
+                      <i className="fa-solid fa-play" /> Ver / Aceder
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
