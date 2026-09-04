@@ -14,42 +14,33 @@ export function SobreSasPanel({ id = "panel-ea-sas", folder = "eavideo2" }: Pane
   return (
     <div className="content-view" id={id}>
       <h2 className="content-heading-1">SAs e Atividades</h2>
-      <p className="content-text" style={{ marginBottom: 12 }}>
-        Vídeos e recursos sobre as Situações de Aprendizagem e Atividades do EA:
+      <p className="content-text" style={{ marginBottom: 20 }}>
+        Vídeos demonstrativos das Situações de Aprendizagem e Atividades:
       </p>
 
-      <div className="table-responsive-container">
-        {loading && <div className="table-loader">A carregar conteúdos...</div>}
+      {loading && <div className="table-loader">A carregar vídeos...</div>}
 
-        {!loading && (!configured || error || files.length === 0) && (
-          <div className="table-loader">
-            {error ? `Erro: ${error}` : "Nenhum conteúdo encontrado nesta pasta."}
-          </div>
-        )}
+      {!loading && (!configured || error || files.length === 0) && (
+        <div className="table-loader">
+          {error ? `Erro: ${error}` : "Nenhum vídeo encontrado nesta pasta."}
+        </div>
+      )}
 
-        {!loading && files.length > 0 && (
-          <table className="dynamic-table">
-            <thead>
-              <tr>
-                <th>Nome do Vídeo / Conteúdo</th>
-                <th style={{ textAlign: "center", width: 150 }}>Ação</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file) => (
-                <tr key={file.id}>
-                  <td><strong>{file.name}</strong></td>
-                  <td style={{ textAlign: "center" }}>
-                    <a href={file.url} target="_blank" rel="noopener noreferrer" className="btn-aceder-sm">
-                      <i className="fa-solid fa-play" /> Ver / Aceder
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      {!loading && files.length > 0 && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
+          {files.map((file) => (
+            <div key={file.id} style={{ border: "1px solid #e2e8f0", borderRadius: "8px", overflow: "hidden", padding: "12px", backgroundColor: "#fff" }}>
+              <video controls style={{ width: "100%", borderRadius: "6px", backgroundColor: "#000" }}>
+                <source src={file.url} type={file.mimeType || "video/mp4"} />
+                O seu navegador não suporta a reprodução deste vídeo.
+              </video>
+              <p style={{ marginTop: "10px", fontWeight: "600", fontSize: "14px", color: "#334155" }}>
+                {file.name}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
