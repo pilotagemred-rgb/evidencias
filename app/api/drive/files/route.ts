@@ -11,6 +11,12 @@ const VALID_FOLDERS: DriveFolderKey[] = [
   "analise",
   "questionarios",
   "protocolo",
+  "eavideo1",
+  "eavideo2",
+  "giredvideo1",
+  "giredvideo2",
+  "giredvideo3",
+  "giredvideo4",
 ];
 
 function getOrigin(request: NextRequest): string {
