@@ -8,14 +8,14 @@ type PanelProps = {
   folder?: DriveFolderKey;
 };
 
-export function SobreOqPanel({ id = "panel-ea-oq", folder = "eavideo1" }: PanelProps) {
+export function SobreSasPanel({ id = "panel-ea-sas", folder = "eavideo2" }: PanelProps) {
   const { files, loading, error, configured } = useDriveFiles(folder);
 
   return (
     <div className="content-view" id={id}>
       <h2 className="content-heading-1">SAs e Atividades</h2>
       <p className="content-text" style={{ marginBottom: 20 }}>
-        Veja abaixo os vídeos explicativos sobre o Estudo Acompanhado:
+        Vídeos demonstrativos das Situações de Aprendizagem e Atividades:
       </p>
 
       {loading && <div className="table-loader">A carregar vídeos...</div>}
